@@ -1,0 +1,23 @@
+{
+  "lastUpdated": "2024-01-20",
+  "episodes": [
+    {
+      "id": 1,
+      "series": "Arrow",
+      "episode": "S01E01",
+      "name": "Pilot",
+      "airDate": "2012-10-10",
+      "source": "Local",
+      "watched": false
+    },
+    {
+      "id": 2,
+      "series": "Arrow",
+      "episode": "S01E02",
+      "name": "Honor Thy Father",
+      "airDate": "2012-10-17",
+      "source": "Local",
+      "watched": false
+    }
+  ]
+}

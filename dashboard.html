@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Dashboard - DC Universe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body style="background:#181818;color:#fff;">
+    <nav class="navbar navbar-dark bg-dark mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> Back to Main</a>
+            <span class="navbar-text">Admin Dashboard</span>
+        </div>
+    </nav>
+    <div id="dashboardPanel" style="padding:24px;"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <script src="./dashboard.js"></script>
+    <script>
+        $(document).ready(function() {
+            if (window.renderDashboard) renderDashboard();
+        });
+    </script>
+</body>
+</html>

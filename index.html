@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="DC Universe episode order tracker. Track all DC shows in chronological order.">
+    <title>DC Universe Episode Order</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <button class="btn-toggle" id="sidebarToggle" type="button">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h3>DC Universe</h3>
+        </div>
+        
+        <div class="sidebar-content">
+            <div class="filter-section">
+                <h5>Filters</h5>
+                <div class="accordion" id="filterAccordion">
+                    <!-- Universe Filter -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#universeFilter">
+                                Universe Filter
+                            </button>
+                        </h2>
+                        <div id="universeFilter" class="accordion-collapse collapse">
+                            <div class="accordion-body" id="universeCheckboxes">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="date-filter mt-3">
+                <h5>Date Range</h5>
+                <input type="text" id="fromDate" class="form-control date-picker mb-2" placeholder="From Date">
+                <input type="text" id="toDate" class="form-control date-picker mb-2" placeholder="To Date">
+                <button class="btn btn-outline-secondary w-100" onclick="applyFilters()">Apply Filters</button>
+            </div>
+            <hr>
+            <div class="admin-section mt-3">
+                <a class="btn btn-warning w-100" href="dashboard.html">
+                    <i class="fas fa-tools"></i> Admin Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <span class="navbar-brand">DC Universe Episode Order</span>
+                <div class="navbar-nav">
+                    <a href="https://github.com/your-username/arrowverse-info" class="nav-link" target="_blank">
+                        Project on Github
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="container mt-4">
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="search-container">
+                        <div class="input-group">
+                            <input type="text" id="searchBox" class="form-control" 
+                                placeholder="Search episodes by title, show, date, crossover..."
+                                aria-label="Search episodes">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" 
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Search Options
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end p-3" style="width: 250px;">
+                                    <li><h6 class="dropdown-header">Search in:</h6></li>
+                                    <li>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input search-option" type="checkbox" id="searchTitle" checked>
+                                            <label class="form-check-label" for="searchTitle">Episode Title</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input search-option" type="checkbox" id="searchShow" checked>
+                                            <label class="form-check-label" for="searchShow">Show Name</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="form-check">
+                                            <input class="form-check-input search-option" type="checkbox" id="searchWatched">
+                                            <label class="form-check-label" for="searchWatched">Watched Status</label>
+                                        </div>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <button class="btn btn-sm btn-outline-secondary w-100" id="resetSearch">
+                                            Reset Search
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3 text-end">
+                <div class="col">
+                    <a href="#bottom">END</a> |
+                    <a href="#" id="sort-toggle">NEWEST FIRST</a> |
+                    <a href="#" id="no-color">DISABLE COLOR</a> |
+                    <a href="#" id="dark-mode">TOGGLE DARK MODE</a>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table id="episodeTable" class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Series</th>
+                            <th>Episode</th>
+                            <th>Name</th>
+                            <th>Air Date</th>
+                            <th>Crossover</th>
+                            <th style="min-width: 120px;">Watch Status</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="episodeList">
+                        <tr><td colspan="9" class="text-center">Loading episodes...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="episodeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content bg-dark text-light">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <script type="module" src="./script.js"></script>
+</body>
+</html>
+    <script src="./dashboard.js"></script>
+    <script type="module" src="./script.js"></script>
+</body>
+</html>
+</html>
